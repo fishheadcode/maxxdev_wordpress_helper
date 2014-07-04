@@ -121,7 +121,7 @@ class Maxxdev {
      * @param string $style_name
      * @param string $folder
      */
-    function addJs($filename, $script_name = "my_script", $folder = null) {
+    public static function addJs($filename, $script_name = "my_script", $folder = null) {
         if ($folder === null || strlen($folder) === 0) {
             $folder = plugin_dir_url(__FILE__) . "/js/";
         }
@@ -136,8 +136,35 @@ class Maxxdev {
      * @param string $capability
      * @param string $slug
      */
-    function addAdminOptionsPage($page_title, $menu_title, $capability, $slug) {
-        add_options_page($page_title, $menu_title, $capability, $slug);
+    public static function addAdminOptionsPage($page_title, $menu_title, $slug, $function) {
+        add_options_page($page_title, $menu_title, "manage_options", $slug, $function);
+    }
+
+    /**
+     *
+     * @param string $plugin_dir needs to be plugin_dir(__FILE__) for recognizing icon-path
+     * @param string $page_title The title of the menu
+     * @param string $menu_title The title of the link
+     * @param string $menu_slug The slug
+     * @param string $function Function to display content of the menu point
+     * @param string $icon_filename filename of the icon, e.g. "icon.png"
+     * @param int $position position of the menu point, "81" is directly after "settings"
+     */
+    public static function addAdminTopLevelMenu($plugin_dir, $page_title, $menu_title, $menu_slug, $function, $icon_filename, $position = 81) {
+        $icon_url = $plugin_dir . "assets/icons/" . $icon_filename;
+        add_menu_page($page_title, $menu_title, "manage_options", $menu_slug, $function, $icon_url, $position);
+    }
+
+    /**
+     *
+     * @param string $parent_slug
+     * @param string $page_title
+     * @param string $menu_title
+     * @param string $menu_slug
+     * @param string $function
+     */
+    public static function addAdminTopLevelSubmenu($parent_slug, $page_title, $menu_title, $menu_slug, $function) {
+        add_submenu_page($parent_slug, $page_title, $menu_title, "manage_options", $menu_slug, $function);
     }
 
 }
