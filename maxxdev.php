@@ -15,17 +15,18 @@ class Maxxdev {
      *
      * Adds a new custom post type
      *
-     * @param string $post_type_name
-     * @param string $name
-     * @param string $singular_name
-     * @param string $text_new
-     * @param string $text_edit
-     * @param string $text_watch
-     * @param string $text_search
-     * @param string $text_search_not_found
-     * @param string $text_no_deleted_elements
+     * @param string $post_type_name The name of the posttype
+     * @param string $name The (plural) name of the posttype
+     * @param string $singular_name The singular name of the posttype
+     * @param string $text_new The text for creating a new element of this posttype
+     * @param string $text_edit The text for editing an element of this posttype
+     * @param string $text_watch The text for watching an element of this posttype
+     * @param string $text_search The text for search elements of this posttype
+     * @param string $text_search_not_found The text for "elements of this posttype not found"
+     * @param string $text_no_deleted_elements The text for "there are no deleted elements of this posttype"
+     * @param string $icon_path The folder/file where the icon is saved
      */
-    public static function registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements) {
+    public static function registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path) {
         // Labels
         $labels = array(
             'name' => _x($name, "post type general name"),
@@ -47,7 +48,7 @@ class Maxxdev {
             'labels' => $labels,
             'public' => true,
             'has_archive' => false,
-            'menu_icon' => plugin_dir_url(__FILE__) . "assets/icons/" . $post_type_name . ".png",
+            'menu_icon' => $icon_path,
             'rewrite' => false,
             'supports' => array('title', 'editor', 'thumbnail')
         ));
@@ -55,10 +56,10 @@ class Maxxdev {
 
     /**
      *
-     * @param string $posttype
-     * @param string $singular
-     * @param string $plural
-     * @param array $terms
+     * @param string $posttype For which posttype the taxonomy shall be available?
+     * @param string $singular Singular name of the taxonomy
+     * @param string $plural Plural name of the taxonomy
+     * @param array $terms Terms (Values) of the Taxonomy. Must be multiple arrays (0=name, 1=slug) within a main array. (e.g. array(array('name','slug'), array('name2','slug2'));)
      */
     public static function registerTaxonomy($posttype, $singular, $plural, $terms = array()) {
         $labels = array(
@@ -101,40 +102,30 @@ class Maxxdev {
      *
      * Adds CSS to your site
      *
-     * @param string $filename
-     * @param string $style_name
-     * @param string $folder
+     * @param string $file_path The filepath of the CSS file
+     * @param string $style_name The name/handler of the style
      */
-    public static function addCSS($filename, $style_name = "my_style", $folder = null) {
-        if ($folder === null || strlen($folder) === 0) {
-            $folder = plugin_dir_url(__FILE__) . "/css/";
-        }
-
-        wp_enqueue_style($style_name, $folder . $filename);
+    public static function addCSS($file_path, $style_name = "my_style") {
+        wp_enqueue_style($style_name, $file_path);
     }
 
     /**
      *
      * Adds JS to your site
      *
-     * @param string $filename
-     * @param string $style_name
-     * @param string $folder
+     * @param string $file_path The filepath of the JS file
+     * @param string $style_name The name/handler of the style
      */
-    public static function addJs($filename, $script_name = "my_script", $folder = null) {
-        if ($folder === null || strlen($folder) === 0) {
-            $folder = plugin_dir_url(__FILE__) . "/js/";
-        }
-
-        wp_enqueue_script($script_name, $folder . $filename);
+    public static function addJs($file_path, $script_name = "my_script") {
+        wp_enqueue_script($script_name, $file_path);
     }
 
     /**
      *
-     * @param string $page_title
-     * @param string $menu_title
-     * @param string $capability
-     * @param string $slug
+     * @param string $page_title String that appears at the browser title
+     * @param string $menu_title String that appears in the menu
+     * @param string $slug The slug for the backend URI
+     * @param string $function Which function should be called to display the content of this site?
      */
     public static function addAdminOptionsPage($page_title, $menu_title, $slug, $function) {
         add_options_page($page_title, $menu_title, "manage_options", $slug, $function);
@@ -142,7 +133,7 @@ class Maxxdev {
 
     /**
      *
-     * @param string $plugin_dir needs to be plugin_dir(__FILE__) for recognizing icon-path
+     * @param string $plugin_dir needs to be plugin_dir_url(__FILE__) for recognizing icon-path
      * @param string $page_title The title of the menu
      * @param string $menu_title The title of the link
      * @param string $menu_slug The slug
@@ -157,7 +148,7 @@ class Maxxdev {
 
     /**
      *
-     * @param string $parent_slug
+     * @param string $parent_slug To which slug the menu point should be added?
      * @param string $page_title
      * @param string $menu_title
      * @param string $menu_slug
@@ -167,18 +158,47 @@ class Maxxdev {
         add_submenu_page($parent_slug, $page_title, $menu_title, "manage_options", $menu_slug, $function);
     }
 
+    /**
+     *
+     * Creates a new metabox in the admin area for the specified posttypes.
+     * Must be executed in the hook "add_meta_boxes".
+     * HowTo save the new fields: http://codex.wordpress.org/Function_Reference/add_meta_box
+     *
+     * @param array $screens An array with the posttypes, which shall show the metabox (e.g. array('post', 'page');)
+     * @param type $section_id The unique id of the metabox
+     * @param type $section_title The title of the metabox
+     * @param type $section_title_translate_key The translation key for the metabox title
+     * @param type $callback_function The callback function, which generates the fields
+     */
+    public static function addAdminMetaBox($screens, $section_id, $section_title, $section_title_translate_key, $callback_function) {
+        foreach ($screens as $screen) {
+
+            add_meta_box(
+                    $section_id, __($section_title, $section_title_translate_key), $callback_function, $screen
+            );
+        }
+    }
+
 }
 
-/**
- * Just an alias
- */
-class MDH extends Maxxdev {
+if (!class_exists("MDH")) {
+
+    /**
+     * Just an alias
+     */
+    class MDH extends Maxxdev {
+
+    }
 
 }
 
-/**
- * Just an alias
- */
-class MDHelper extends Maxxdev {
+if (!class_exists("MDHelper")) {
+
+    /**
+     * Just an alias
+     */
+    class MDHelper extends Maxxdev {
+
+    }
 
 }
