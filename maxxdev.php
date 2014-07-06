@@ -179,6 +179,41 @@ class Maxxdev {
         }
     }
 
+    /**
+     * Adds jQuery to the site.
+     * Should be executed in the hook "wp_enqueue_scripts".
+     * If you don't pass a $specific_version with the version number of jquery, the latest stable version from code.jquery.com will be loaded.
+     * Otherwise, the specific version will be loaded from googleapis.com.
+     * Please check the version number if given. The function won't check if the file exists (performance reasons)
+     *
+     * @param string $specific_version If you want to have a specific version of jquery enter the version number here
+     */
+    public static function addJQuery($specific_version = null) {
+        // @TODO add $download(true/false) as parameter
+        if ($specific_version === null) {
+            wp_enqueue_script("maxxdev-helper-jquery", "//code.jquery.com/jquery.min.js");
+        } else {
+            wp_enqueue_script("maxxdev-helper-jquery-specific", "//ajax.googleapis.com/ajax/libs/jquery/" . $specific_version . "/jquery.min.js");
+        }
+    }
+
+    /**
+     *
+     * Adds Bootstrap CSS and JS from the maxcdn servers
+     * Please check the version number if given. The function won't check if the file exists (performance reasons)
+     *
+     * @param string $specific_version Specify the version here. Default: 3.2.0
+     * @param boolean $load_javascript Should the min-js also been loaded?
+     */
+    public static function addBootstrap($specific_version = "3.2.0", $load_javascript = false) {
+        // @TODO add $download(true/false) as
+        wp_enqueue_style("maxxdev-helper-bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/css/bootstrap.min.css");
+
+        if ($load_javascript === true) {
+            wp_enqueue_script("maxxdev-helper-bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/js/bootstrap.min.js");
+        }
+    }
+
 }
 
 if (!class_exists("MDH")) {
