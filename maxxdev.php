@@ -214,26 +214,14 @@ class Maxxdev {
         }
     }
 
-}
-
-if (!class_exists("MDH")) {
-
     /**
-     * Just an alias
+     * Adds font-awesome from the maxcdn servers
+     * Please check the version number if given. The function won't check if the file exists (performance reasons)
+     *
+     * @param type $specific_version Specify the version here. Default: 4.1.0
      */
-    class MDH extends Maxxdev {
-
-    }
-
-}
-
-if (!class_exists("MDHelper")) {
-
-    /**
-     * Just an alias
-     */
-    class MDHelper extends Maxxdev {
-
+    public static function addFontAwesome($specific_version = "4.1.0") {
+        wp_enqueue_style("maxxdev-helper-fontawesome", "//maxcdn.bootstrapcdn.com/font-awesome/" . $specific_version . "/css/font-awesome.min.css");
     }
 
 }
