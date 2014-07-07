@@ -224,4 +224,44 @@ class Maxxdev {
         wp_enqueue_style("maxxdev-helper-fontawesome", "//maxcdn.bootstrapcdn.com/font-awesome/" . $specific_version . "/css/font-awesome.min.css");
     }
 
+    /**
+     * Adds bootswatch to your site
+     * Please check the version number if given. The function won't check if the file exists (performance reasons)
+     *
+     * @param type $theme Name of the theme which should be added. Must be a valid bootswatch theme.
+     * @param type $specific_version Specify the version here. Default: 3.2.0
+     */
+    public static function addBootswatch($theme = "amelia", $specific_version = "3.2.0") {
+        // define default theme if parameter $theme is not a valid theme
+        $default_theme = "amelia";
+
+        // define valid themes, which can be embedded
+        $valid_themes = array(
+            "amelia",
+            "cerulean",
+            "cosmo",
+            "cyborg",
+            "darkly",
+            "flatly",
+            "journal",
+            "lumen",
+            "readable",
+            "simplex",
+            "slate",
+            "spacelab",
+            "superhero",
+            "united",
+            "yeti"
+        );
+
+        // if $theme is not a valid theme...
+        if (!in_array($theme, $valid_themes)) {
+            // ... then set the $theme to the $default_theme
+            $theme = $default_theme;
+        }
+
+        // embed theme in specific version
+        wp_enqueue_style("maxxdev-helper-bootswatch", "//maxcdn.bootstrapcdn.com/bootswatch/" . $specific_version . "/" . $theme . "/bootstrap.min.css");
+    }
+
 }
