@@ -54,6 +54,17 @@ class Maxxdev {
         ));
     }
 
+    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path) {
+        $text_new = "$singular_name anlegen";
+        $text_edit = "$singular_name bearbeiten";
+        $text_watch = "$singular_name ansehen";
+        $text_search = "$name suchen";
+        $text_search_not_found = "Suche nach $name lieferte kein Ergebnis";
+        $text_no_deleted_elements = "Keine gelöschten $name gefunden";
+
+        $this->registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path);
+    }
+
     /**
      *
      * @param string $posttype For which posttype the taxonomy shall be available?
