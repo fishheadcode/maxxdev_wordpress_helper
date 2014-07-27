@@ -31,17 +31,6 @@ class Maxxdev {
         Maxxdev_Posttype_Helper::registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path);
     }
 
-    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path) {
-        $text_new = "$singular_name anlegen";
-        $text_edit = "$singular_name bearbeiten";
-        $text_watch = "$singular_name ansehen";
-        $text_search = "$name suchen";
-        $text_search_not_found = "Suche nach $name lieferte kein Ergebnis";
-        $text_no_deleted_elements = "Keine gelöschten $name gefunden";
-
-        $this->registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path);
-    }
-
     /**
      *
      * @param string $posttype For which posttype the taxonomy shall be available?
@@ -403,6 +392,25 @@ class Maxxdev_Posttype_Helper {
             'rewrite' => false,
             'supports' => array('title', 'editor', 'thumbnail')
         ));
+    }
+
+    /**
+     * Shorter version of registerPostType, which generates all texts automatically
+     *
+     * @param string $post_type_name Posttype name
+     * @param string $name Plural name
+     * @param string $singular_name Singular name
+     * @param string $icon_path Path to the icon
+     */
+    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path) {
+        $text_new = "$singular_name anlegen";
+        $text_edit = "$singular_name bearbeiten";
+        $text_watch = "$singular_name ansehen";
+        $text_search = "$name suchen";
+        $text_search_not_found = "Suche nach $name lieferte kein Ergebnis";
+        $text_no_deleted_elements = "Keine gelöschten $name gefunden";
+
+        Maxxdev_Posttype_Helper::registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path);
     }
 
     /**
