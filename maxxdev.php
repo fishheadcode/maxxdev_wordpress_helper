@@ -458,3 +458,32 @@ class Maxxdev_Posttype_Helper {
     }
 
 }
+
+class Maxxdev_Post_Helper {
+
+    /**
+     * Creates a new page, if not exists
+     *
+     * @param string $page_title The title of the page, e.g. "Dashboard"
+     * @return boolean
+     */
+    public static function createPage($page_title) {
+        $existingPage = get_posts(array(
+            "post_type" => "page",
+            "s" => $page_title
+        ));
+
+        if (count($existingPage) == 0) {
+            wp_insert_post(array(
+                "post_type" => "page",
+                "post_title" => $page_title,
+                "post_status" => "publish"
+            ));
+
+            return true;
+        }
+
+        return false;
+    }
+
+}
