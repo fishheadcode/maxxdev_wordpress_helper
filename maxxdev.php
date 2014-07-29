@@ -366,7 +366,7 @@ class Maxxdev_Posttype_Helper {
      * @param string $text_no_deleted_elements The text for "there are no deleted elements of this posttype"
      * @param string $icon_path The folder/file where the icon is saved
      */
-    public static function registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path) {
+    public static function registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path, $rewrite = false) {
         // Labels
         $labels = array(
             'name' => _x($name, "post type general name"),
@@ -389,7 +389,7 @@ class Maxxdev_Posttype_Helper {
             'public' => true,
             'has_archive' => false,
             'menu_icon' => $icon_path,
-            'rewrite' => false,
+            'rewrite' => $rewrite,
             'supports' => array('title', 'editor', 'thumbnail')
         ));
     }
@@ -402,7 +402,7 @@ class Maxxdev_Posttype_Helper {
      * @param string $singular_name Singular name
      * @param string $icon_path Path to the icon
      */
-    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path) {
+    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path, $rewrite = false) {
         $text_new = "$singular_name anlegen";
         $text_edit = "$singular_name bearbeiten";
         $text_watch = "$singular_name ansehen";
@@ -410,7 +410,7 @@ class Maxxdev_Posttype_Helper {
         $text_search_not_found = "Suche nach $name lieferte kein Ergebnis";
         $text_no_deleted_elements = "Keine gelöschten $name gefunden";
 
-        Maxxdev_Posttype_Helper::registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path);
+        Maxxdev_Posttype_Helper::registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path, $rewrite);
     }
 
     /**
