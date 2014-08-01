@@ -60,7 +60,7 @@ class Maxxdev {
      * Adds JS to your site
      *
      * @param string $file_path The filepath of the JS file
-     * @param string $style_name The name/handler of the style
+     * @param string $script_name The name/handler of the script
      */
     public static function addJs($file_path, $script_name = "my_script") {
         // Fallback for old versions
@@ -278,7 +278,7 @@ class Maxxdev_Frontend_Helper {
      * Adds JS to your site
      *
      * @param string $file_path The filepath of the JS file
-     * @param string $style_name The name/handler of the style
+     * @param string $script_name The name/handler of the script
      */
     public static function addJs($file_path, $script_name = "my_script") {
         wp_enqueue_script($script_name, $file_path);
@@ -486,4 +486,66 @@ class Maxxdev_Post_Helper {
         return false;
     }
 
+}
+
+class Maxxdev_User_Helper {
+
+    /**
+     * Creates a wordpress user
+     * 
+     * @param string $username The username
+     * @param string $email The e-mail
+     * @param string $password The password, if null it will be generated
+     * @param int $password_length The length of the generated password
+     * @param boolean $password_special_signs Should the generated password contain special chars?
+     * @return array Always with keys "success" and "message", if user created also "user_id" as key
+     */
+    public static function createUser($username, $email, $password = null, $password_length = 12, $password_special_signs = false) {
+        $user_id = username_exists($username);
+
+        if (!$user_id) {
+            $email_exists = email_exists($email);
+
+            if ($email_exists == false) {
+                if ($password == null) {
+                    $password = wp_generate_password($password_length, $password_special_signs);
+                }
+
+                $user_id = wp_create_user($username, $password, $email);
+
+                return array(
+                    "success" => true,
+                    "message" => __("User was created successfully"),
+                    "user_id" => $user_id
+                );
+            } else {
+                return array(
+                    "success" => false,
+                    "message" => __("E-Mail exists already")
+                );
+            }
+        } else {
+            return array(
+                "success" => false,
+                "message" => __("Username exists already")
+            );
+        }
+    }
+
+    public static function search() {
+        
+    }
+
+    public static function delete() {
+        
+    }
+
+    public static function setRole() {
+        
+    }
+
+}
+
+class Maxxdev_UserRoles_Helper {
+    
 }
