@@ -11,14 +11,67 @@
 
 class Maxxdev_Helper_Frontend {
 
+	private static $listFrontendCSS = array();
+	private static $listFrontendJS = array();
+	private static $listBackendCSS = array();
+	private static $listBackendJS = array();
+
+	private static function addCSSToList($src, $src_name, $frontend = true, $backend = false) {
+		if ($frontend === true) {
+			$obj = new stdClass();
+			$obj->src = $src;
+			$obj->src_name = $src_name;
+
+			self::$listFrontendCSS[] = $obj;
+		}
+
+		if ($backend === true) {
+			$obj = new stdClass();
+			$obj->src = $src;
+			$obj->src_name = $src_name;
+
+			self::$listBackendCSS[] = $obj;
+		}
+	}
+
+	private static function addJSToList($src, $src_name, $frontend = true, $backend = false) {
+		if ($frontend === true) {
+			$obj = new stdClass();
+			$obj->src = $src;
+			$obj->src_name = $src_name;
+
+			self::$listFrontendJS[] = $obj;
+		}
+
+		if ($backend === true) {
+			$obj = new stdClass();
+			$obj->src = $src;
+			$obj->src_name = $src_name;
+
+			self::$listBackendJS[] = $obj;
+		}
+	}
+
+	public static function enqueueScriptsFrontend() {
+		foreach (self::$listFrontendCSS as $css) {
+			wp_enqueue_style($css->src_name, $css->src);
+		}
+
+		foreach (self::$listFrontendJS as $js) {
+			wp_enqueue_script($js->src_name, $js->src);
+		}
+	}
+
 	/**
 	 * Adds bootswatch to your site
 	 * Please check the version number if given. The function won't check if the file exists (performance reasons)
 	 *
-	 * @param type $theme Name of the theme which should be added. Must be a valid bootswatch theme.
-	 * @param type $specific_version Specify the version here. Default: 3.2.0
+	 * @param string $theme Name of the theme which should be added. Must be a valid bootswatch theme.
+	 * @param string $specific_version Specify the version here. Default: 3.2.0
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
 	 */
-	public static function addBootswatch($theme = "amelia", $specific_version = "3.2.0") {
+	public static function addBootswatch($theme = "amelia", $specific_version = "3.2.0", $frontend = true, $backend = true) {
 		// define default theme if parameter $theme is not a valid theme
 		$default_theme = "amelia";
 
@@ -48,17 +101,19 @@ class Maxxdev_Helper_Frontend {
 		}
 
 		// embed theme in specific version
-		wp_enqueue_style("maxxdev-helper-bootswatch", "//maxcdn.bootstrapcdn.com/bootswatch/" . $specific_version . "/" . $theme . "/bootstrap.min.css");
+		self::addCSSToList("//maxcdn.bootstrapcdn.com/bootswatch/" . $specific_version . "/" . $theme . "/bootstrap.min.css", "maxxdev-helper-bootswatch", $frontend, $backend);
 	}
 
 	/**
 	 * Adds font-awesome from the maxcdn servers
 	 * Please check the version number if given. The function won't check if the file exists (performance reasons)
 	 *
-	 * @param type $specific_version Specify the version here. Default: 4.1.0
+	 * @param string $specific_version Specify the version here. Default: 4.1.0
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
 	 */
-	public static function addFontAwesome($specific_version = "4.1.0") {
-		wp_enqueue_style("maxxdev-helper-fontawesome", "//maxcdn.bootstrapcdn.com/font-awesome/" . $specific_version . "/css/font-awesome.min.css");
+	public static function addFontAwesome($specific_version = "4.1.0", $frontend = true, $backend = true) {
+		self::addCSSToList("//maxcdn.bootstrapcdn.com/font-awesome/" . $specific_version . "/css/font-awesome.min.css", "maxxdev-helper-fontawesome", $frontend, $backend);
 	}
 
 	/**
@@ -67,14 +122,18 @@ class Maxxdev_Helper_Frontend {
 	 * Please check the version number if given. The function won't check if the file exists (performance reasons)
 	 *
 	 * @param string $specific_version Specify the version here. Default: 3.2.0
+	 * @param boolean $load_css Should the css been loaded?
 	 * @param boolean $load_javascript Should the min-js also been loaded?
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
 	 */
-	public static function addBootstrap($specific_version = "3.2.0", $load_javascript = false) {
-		// @TODO add $download(true/false) as
-		wp_enqueue_style("maxxdev-helper-bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/css/bootstrap.min.css");
+	public static function addBootstrap($specific_version = "3.2.0", $load_css = true, $load_javascript = false, $frontend = true, $backend = true) {
+		if ($load_css === true) {
+			self::addCSSToList("//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/css/bootstrap.min.css", "maxxdev-helper-bootstrap", $frontend, $backend);
+		}
 
 		if ($load_javascript === true) {
-			wp_enqueue_script("maxxdev-helper-bootstrap", "//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/js/bootstrap.min.js");
+			self::addJSToList("//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/js/bootstrap.min.js", "maxxdev-helper-bootstrap", $frontend, $backend);
 		}
 	}
 
@@ -86,13 +145,14 @@ class Maxxdev_Helper_Frontend {
 	 * Please check the version number if given. The function won't check if the file exists (performance reasons)
 	 *
 	 * @param string $specific_version If you want to have a specific version of jquery enter the version number here
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
 	 */
-	public static function addJQuery($specific_version = null) {
-		// @TODO add $download(true/false) as parameter
+	public static function addJQuery($specific_version = null, $frontend = true, $backend = true) {
 		if ($specific_version === null) {
-			wp_enqueue_script("maxxdev-helper-jquery", "//code.jquery.com/jquery.min.js");
+			self::addJSToList("//code.jquery.com/jquery.min.js", "maxxdev-helper-jquery", $frontend, $backend);
 		} else {
-			wp_enqueue_script("maxxdev-helper-jquery-specific", "//ajax.googleapis.com/ajax/libs/jquery/" . $specific_version . "/jquery.min.js");
+			self::addJSToList("//ajax.googleapis.com/ajax/libs/jquery/" . $specific_version . "/jquery.min.js", "maxxdev-helper-jquery-specific", $frontend, $backend);
 		}
 	}
 
@@ -102,9 +162,15 @@ class Maxxdev_Helper_Frontend {
 	 *
 	 * @param string $file_path The filepath of the CSS file
 	 * @param string $style_name The name/handler of the style
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
 	 */
-	public static function addCSS($file_path, $style_name = "my_style") {
-		wp_enqueue_style($style_name, $file_path);
+	public static function addCSS($file_path, $style_name = null, $frontend = true, $backend = true) {
+		if ($style_name === null) {
+			$style_name = "maxxdev-helper-addCSS" . rand(1000, 9000);
+		}
+
+		self::addCSSToList($file_path, $style_name, $frontend, $backend);
 	}
 
 	/**
@@ -113,9 +179,15 @@ class Maxxdev_Helper_Frontend {
 	 *
 	 * @param string $file_path The filepath of the JS file
 	 * @param string $script_name The name/handler of the script
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
 	 */
-	public static function addJs($file_path, $script_name = "my_script") {
-		wp_enqueue_script($script_name, $file_path);
+	public static function addJs($file_path, $script_name = null, $frontend = true, $backend = true) {
+		if ($script_name === null) {
+			$script_name = "maxxdev-helper-addJs" . rand(1000, 9000);
+		}
+
+		self::addJSToList($file_path, $script_name, $frontend, $backend);
 	}
 
 }
@@ -314,31 +386,7 @@ class Maxxdev_Helper_Post {
 	 * @return boolean
 	 */
 	public static function createPage($page_title) {
-		$existingPage = get_posts(array(
-			"post_type" => "page",
-			"s" => $page_title
-		));
-		$page_exists = false;
-
-		if (count($existingPage) > 0) {
-			foreach ($existingPage as $ep) {
-				if ($ep->post_title === $page_title) {
-					$page_exists = true;
-				}
-			}
-		}
-
-		if ($page_exists === false) {
-			wp_insert_post(array(
-				"post_type" => "page",
-				"post_title" => $page_title,
-				"post_status" => "publish"
-			));
-
-			return true;
-		}
-
-		return false;
+		return Maxxdev_Helper_Pages::createPage($page_title);
 	}
 
 }
@@ -452,3 +500,53 @@ class Maxxdev_Helper_Date {
 	}
 
 }
+
+class Maxxdev_Helper_Pages {
+
+	/**
+	 * Creates a new page, if not exists
+	 *
+	 * @param string $page_title The title of the page, e.g. "Dashboard"
+	 * @return boolean
+	 */
+	public static function createPage($page_title) {
+		$existingPage = get_posts(array(
+			"post_type" => "page",
+			"s" => $page_title
+		));
+
+		if (count($existingPage) > 0) {
+			foreach ($existingPage as $ep) {
+				if ($ep->post_title === $page_title) {
+					return false;
+				}
+			}
+		}
+
+		wp_insert_post(array(
+			"post_type" => "page",
+			"post_title" => $page_title,
+			"post_status" => "publish"
+		));
+
+		return true;
+	}
+
+	public static function getPageByTitle($title) {
+		$page = get_page_by_title($title);
+
+		if ($page === null) {
+			return new stdClass();
+		}
+
+		return $page;
+	}
+
+	public static function getPageContentByTitle($title) {
+		$page = self::getPageByTitle($title);
+		return $page->post_content;
+	}
+
+}
+
+add_action("wp_enqueue_scripts", array(Maxxdev_Helper_Frontend, "enqueueScriptsFrontend"));
