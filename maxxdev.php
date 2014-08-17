@@ -366,7 +366,7 @@ class Maxxdev_Posttype_Helper {
      * @param string $text_no_deleted_elements The text for "there are no deleted elements of this posttype"
      * @param string $icon_path The folder/file where the icon is saved
      */
-    public static function registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path, $rewrite = false) {
+    public static function registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path, $rewrite = false, $show_in_nav = true, $position = false) {
         // Labels
         $labels = array(
             'name' => _x($name, "post type general name"),
@@ -380,18 +380,30 @@ class Maxxdev_Posttype_Helper {
             'search_items' => __($text_search),
             'not_found' => __($text_search_not_found),
             'not_found_in_trash' => __($text_no_deleted_elements),
-            'parent_item_colon' => ''
+            'parent_item_colon' => '',
         );
 
-        // Register post type
-        register_post_type($post_type_name, array(
+        $args = array(
             'labels' => $labels,
             'public' => true,
-            'has_archive' => false,
             'menu_icon' => $icon_path,
             'rewrite' => $rewrite,
-            'supports' => array('title', 'editor', 'thumbnail')
-        ));
+            'show_ui' => $show_in_nav,
+            'show_in_nav' => $show_in_nav,
+            'supports' => array('title', 'editor', 'thumbnail'));
+
+        if ($position !== false) {
+            $args['menu_position'] = $position;
+        }
+
+        if ($rewrite !== false && is_array($rewrite)) {
+            $args["has_archive"] = true;
+        } else {
+            $args["has_archive"] = false;
+        }
+
+        // Register post type
+        register_post_type($post_type_name, $args);
     }
 
     /**
@@ -402,7 +414,7 @@ class Maxxdev_Posttype_Helper {
      * @param string $singular_name Singular name
      * @param string $icon_path Path to the icon
      */
-    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path, $rewrite = false) {
+    public static function registerPostTypeShort($post_type_name, $name, $singular_name, $icon_path, $rewrite = false, $show_in_nav = true, $position = false) {
         $text_new = "$singular_name anlegen";
         $text_edit = "$singular_name bearbeiten";
         $text_watch = "$singular_name ansehen";
@@ -410,7 +422,7 @@ class Maxxdev_Posttype_Helper {
         $text_search_not_found = "Suche nach $name lieferte kein Ergebnis";
         $text_no_deleted_elements = "Keine gelöschten $name gefunden";
 
-        Maxxdev_Posttype_Helper::registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path, $rewrite);
+        Maxxdev_Posttype_Helper::registerPostType($post_type_name, $name, $singular_name, $text_new, $text_edit, $text_watch, $text_search, $text_search_not_found, $text_no_deleted_elements, $icon_path, $rewrite, $show_in_nav, $position);
     }
 
     /**
@@ -472,8 +484,17 @@ class Maxxdev_Post_Helper {
             "post_type" => "page",
             "s" => $page_title
         ));
+        $page_exists = false;
 
-        if (count($existingPage) == 0) {
+        if (count($existingPage) > 0) {
+            foreach ($existingPage as $ep) {
+                if ($ep->post_title === $page_title) {
+                    $page_exists = true;
+                }
+            }
+        }
+
+        if ($page_exists === false) {
             wp_insert_post(array(
                 "post_type" => "page",
                 "post_title" => $page_title,
@@ -542,6 +563,20 @@ class Maxxdev_User_Helper {
 
     public static function setRole() {
         
+    }
+
+    public static function autoLogin($user, $password, $remember = false) {
+        $creds = array();
+        $creds["user_login"] = $user;
+        $creds["user_password"] = $password;
+        $creds["remember"] = $remember;
+        $autologin_user = wp_signon($creds);
+
+        if (!is_wp_error($autologin_user)) {
+            wp_set_current_user($autologin_user->ID);
+        }
+
+        return $autologin_user;
     }
 
 }
