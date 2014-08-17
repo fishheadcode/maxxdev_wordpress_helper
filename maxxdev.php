@@ -16,6 +16,14 @@ class Maxxdev_Helper_Frontend {
 	private static $listBackendCSS = array();
 	private static $listBackendJS = array();
 
+	/**
+	 * adds CSS to the "CSS Queue"
+	 * 
+	 * @param string $src the source of the CSS
+	 * @param string $src_name the unique sourcename of the CSS
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
+	 */
 	private static function addCSSToList($src, $src_name, $frontend = true, $backend = false) {
 		if ($frontend === true) {
 			$obj = new stdClass();
@@ -34,6 +42,14 @@ class Maxxdev_Helper_Frontend {
 		}
 	}
 
+	/**
+	 * adds JS to the "JS Queue"
+	 * 
+	 * @param string $src the source of the JS
+	 * @param string $src_name the unique sourcename of the JS
+	 * @param boolean $frontend Should it be embedded in the frontend?
+	 * @param boolean $backend Should it be embedded in the backend?
+	 */
 	private static function addJSToList($src, $src_name, $frontend = true, $backend = false) {
 		if ($frontend === true) {
 			$obj = new stdClass();
@@ -52,6 +68,9 @@ class Maxxdev_Helper_Frontend {
 		}
 	}
 
+	/**
+	 * Works the queue of the temporarily cached CSS and JS files and embeds them to the frontend
+	 */
 	public static function enqueueScriptsFrontend() {
 		foreach (self::$listFrontendCSS as $css) {
 			wp_enqueue_style($css->src_name, $css->src);
