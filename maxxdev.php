@@ -18,7 +18,7 @@ class Maxxdev_Helper_Frontend {
 
 	/**
 	 * adds CSS to the "CSS Queue"
-	 * 
+	 *
 	 * @param string $src the source of the CSS
 	 * @param string $src_name the unique sourcename of the CSS
 	 * @param boolean $frontend Should it be embedded in the frontend?
@@ -44,7 +44,7 @@ class Maxxdev_Helper_Frontend {
 
 	/**
 	 * adds JS to the "JS Queue"
-	 * 
+	 *
 	 * @param string $src the source of the JS
 	 * @param string $src_name the unique sourcename of the JS
 	 * @param boolean $frontend Should it be embedded in the frontend?
@@ -414,7 +414,7 @@ class Maxxdev_Helper_User {
 
 	/**
 	 * Creates a wordpress user
-	 * 
+	 *
 	 * @param string $username The username
 	 * @param string $email The e-mail
 	 * @param string $password The password, if null it will be generated
@@ -455,23 +455,29 @@ class Maxxdev_Helper_User {
 	}
 
 	public static function search() {
-		
+
 	}
 
 	public static function delete() {
-		
+
 	}
 
 	public static function setRole() {
-		
+
 	}
 
-	public static function autoLogin($user, $password, $remember = false) {
+	public static function login($user, $password, $remember = false) {
 		$creds = array();
 		$creds["user_login"] = $user;
 		$creds["user_password"] = $password;
 		$creds["remember"] = $remember;
-		$autologin_user = wp_signon($creds);
+		$login_user = wp_signon($creds);
+
+		return $login_user;
+	}
+
+	public static function autoLogin($user, $password, $remember = false) {
+		$autologin_user = self::login($user, $password, $remember);
 
 		if (!is_wp_error($autologin_user)) {
 			wp_set_current_user($autologin_user->ID);
@@ -483,7 +489,7 @@ class Maxxdev_Helper_User {
 }
 
 class Maxxdev_Helper_UserRoles {
-	
+
 }
 
 class Maxxdev_Helper_Date {
@@ -491,7 +497,7 @@ class Maxxdev_Helper_Date {
 	/**
 	 * Converts nglish day names to german day names
 	 * This can be very helpful, if you´re not able/allowed to setlocale() on some servers
-	 * 
+	 *
 	 * @param string $str
 	 * @return string
 	 */
@@ -506,7 +512,7 @@ class Maxxdev_Helper_Date {
 	/**
 	 * Converts english month names to german month names
 	 * This can be very helpful, if you´re not able/allowed to setlocale() on some servers
-	 * 
+	 *
 	 * @param string $str
 	 * @return string
 	 */
