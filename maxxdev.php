@@ -11,6 +11,7 @@
 
 require_once "classes/admin.php";
 require_once "classes/date.php";
+require_once "classes/formbuilder.php";
 require_once "classes/frontend.php";
 require_once "classes/media.php";
 require_once "classes/pages.php";
