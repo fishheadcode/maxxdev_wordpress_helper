@@ -24,6 +24,10 @@ class Maxxdev {
 
 	public static function enqueueScriptsFrontend() {
 		Maxxdev_Helper_Frontend::enqueueScriptsFrontend();
+
+		// add new directories for embedding files later
+		Maxxdev_Helper_Frontend::addIncludePath(get_template_directory());
+		Maxxdev_Helper_Frontend::addIncludePath(plugin_dir_path(__FILE__));
 	}
 
 }

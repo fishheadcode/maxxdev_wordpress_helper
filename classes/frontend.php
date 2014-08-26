@@ -6,6 +6,37 @@ class Maxxdev_Helper_Frontend {
 	private static $listFrontendJS = array();
 	private static $listBackendCSS = array();
 	private static $listBackendJS = array();
+	private static $includePaths = array();
+
+	public static function addIncludePath($path) {
+		self::$includePaths[] = $path;
+	}
+
+	public static function includeFile($file) {
+		$included = false;
+
+		if (count(self::$includePaths) > 0) {
+			foreach (self::$includePaths as $include_path) {
+				if ($included === false) {
+					$file_path = $include_path . "/" . $file;
+
+					if (file_exists($file_path)) {
+						include $file_path;
+						$included = true;
+					}
+				}
+			}
+		}
+
+		if ($included === false) {
+			if (file_exists($file)) {
+				include $file;
+				$included = true;
+			}
+		}
+
+		return $included;
+	}
 
 	/**
 	 * adds CSS to the "CSS Queue"
