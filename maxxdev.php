@@ -22,14 +22,17 @@ require_once "classes/userroles.php";
 
 class Maxxdev {
 
-	public static function enqueueScriptsFrontend() {
-		Maxxdev_Helper_Frontend::enqueueScriptsFrontend();
-
+	public static function init() {
 		// add new directories for embedding files later
 		Maxxdev_Helper_Frontend::addIncludePath(get_template_directory());
 		Maxxdev_Helper_Frontend::addIncludePath(plugin_dir_path(__FILE__));
 	}
 
+	public static function enqueueScriptsFrontend() {
+		Maxxdev_Helper_Frontend::enqueueScriptsFrontend();
+	}
+
 }
 
+add_action("init", array(Maxxdev, "init"));
 add_action("wp_enqueue_scripts", array(Maxxdev, "enqueueScriptsFrontend"), 90);
