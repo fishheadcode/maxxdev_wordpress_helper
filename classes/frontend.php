@@ -12,8 +12,19 @@ class Maxxdev_Helper_Frontend {
 		self::$includePaths[] = $path;
 	}
 
+	private static function initDefaultIncludePaths() {
+		if (count(self::$includePaths) == 0) {
+			// add new directories for embedding files later
+			self::addIncludePath(get_template_directory());
+			self::addIncludePath(plugin_dir_path(__FILE__));
+		}
+	}
+
 	public static function includeFile($file) {
 		$included = false;
+
+		// initial call of default template paths
+		self::initDefaultIncludePaths();
 
 		if (count(self::$includePaths) > 0) {
 			foreach (self::$includePaths as $include_path) {

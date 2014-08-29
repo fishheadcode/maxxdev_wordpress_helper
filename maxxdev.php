@@ -23,9 +23,7 @@ require_once "classes/userroles.php";
 class Maxxdev {
 
 	public static function init() {
-		// add new directories for embedding files later
-		Maxxdev_Helper_Frontend::addIncludePath(get_template_directory());
-		Maxxdev_Helper_Frontend::addIncludePath(plugin_dir_path(__FILE__));
+		
 	}
 
 	public static function enqueueScriptsFrontend() {
