@@ -8,7 +8,7 @@ class Maxxdev_Helper_Pages {
 	 * @param string $page_title The title of the page, e.g. "Dashboard"
 	 * @return boolean
 	 */
-	public static function createPage($page_title) {
+	public static function createPage($page_title, $page_template = null) {
 		$existingPage = get_posts(array(
 			"post_type" => "page",
 			"s" => $page_title
@@ -22,13 +22,21 @@ class Maxxdev_Helper_Pages {
 			}
 		}
 
-		wp_insert_post(array(
+		$post_id = wp_insert_post(array(
 			"post_type" => "page",
 			"post_title" => $page_title,
 			"post_status" => "publish"
 		));
 
+		if ($page_template != null) {
+			self::setPageTemplate($post_id, $page_template);
+		}
+
 		return true;
+	}
+
+	public static function setPageTemplate($page_id, $template_file) {
+		update_post_meta($page_id, "_wp_page_template", $template_file);
 	}
 
 	public static function getPageByTitle($title) {
