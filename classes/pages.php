@@ -35,10 +35,23 @@ class Maxxdev_Helper_Pages {
 		return true;
 	}
 
+	/**
+	 * Sets a template file to a page
+	 * 
+	 * @param int $page_id The ID of the post
+	 * @param string $template_file The template file in the template folder, e.g. "myfile.php"
+	 */
 	public static function setPageTemplate($page_id, $template_file) {
 		update_post_meta($page_id, "_wp_page_template", $template_file);
 	}
 
+	/**
+	 * Returns the page as object.
+	 * If no page is found, an empty stdClass() object will be returned
+	 * 
+	 * @param string $title Title of the page, e.g. "My Test Page"
+	 * @return \stdClass
+	 */
 	public static function getPageByTitle($title) {
 		$page = get_page_by_title($title);
 
@@ -49,6 +62,13 @@ class Maxxdev_Helper_Pages {
 		return $page;
 	}
 
+	/**
+	 * Returns the content of a specific page.
+	 * The page will be searchd by the title (first param $title)
+	 * 
+	 * @param string $title The page name, e.g. "My Test Page"
+	 * @return string
+	 */
 	public static function getPageContentByTitle($title) {
 		$page = self::getPageByTitle($title);
 		return $page->post_content;
