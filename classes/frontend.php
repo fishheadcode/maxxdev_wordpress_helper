@@ -13,7 +13,7 @@ class Maxxdev_Helper_Frontend {
 	}
 
 	private static function initDefaultIncludePaths() {
-		if (count(self::$includePaths) == 0) {
+		if (!in_array(plugin_dir_path(__FILE__), self::$includePaths)) {
 			// add new directories for embedding files later
 			self::addIncludePath(get_template_directory());
 			self::addIncludePath(plugin_dir_path(__FILE__));

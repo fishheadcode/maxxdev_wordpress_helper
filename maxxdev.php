@@ -10,6 +10,7 @@
  */
 
 require_once "classes/admin.php";
+require_once "classes/controller.php";
 require_once "classes/date.php";
 require_once "classes/formbuilder.php";
 require_once "classes/frontend.php";

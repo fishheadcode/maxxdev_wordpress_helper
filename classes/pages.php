@@ -2,6 +2,8 @@
 
 class Maxxdev_Helper_Pages {
 
+	public static $pages = array();
+
 	/**
 	 * Creates a new page, if not exists
 	 *
@@ -9,11 +11,16 @@ class Maxxdev_Helper_Pages {
 	 * @return boolean
 	 */
 	public static function createPage($page_title, $page_template = null) {
+		// search pages		
 		$existingPage = get_posts(array(
 			"post_type" => "page",
 			"s" => $page_title
 		));
 
+		// add pages to "added pages"
+		self::$pages[] = $page_title;
+
+		// check if page exists AND the title is EXACT the same like the param $page_title
 		if (count($existingPage) > 0) {
 			foreach ($existingPage as $ep) {
 				if ($ep->post_title === $page_title) {
@@ -22,12 +29,14 @@ class Maxxdev_Helper_Pages {
 			}
 		}
 
+		// insert page, get id
 		$post_id = wp_insert_post(array(
 			"post_type" => "page",
 			"post_title" => $page_title,
 			"post_status" => "publish"
 		));
 
+		// set page template when given
 		if ($page_template != null) {
 			self::setPageTemplate($post_id, $page_template);
 		}
