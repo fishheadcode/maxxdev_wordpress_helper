@@ -14,6 +14,7 @@ require_once "classes/controller.php";
 require_once "classes/date.php";
 require_once "classes/formbuilder.php";
 require_once "classes/frontend.php";
+require_once "classes/mail.php";
 require_once "classes/media.php";
 require_once "classes/pages.php";
 require_once "classes/posttype.php";
@@ -24,7 +25,7 @@ require_once "classes/userroles.php";
 class Maxxdev {
 
 	public static function init() {
-		
+
 	}
 
 	public static function enqueueScriptsFrontend() {
