@@ -52,3 +52,17 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 - Search a user
 - Delete a user
 - Set role for a user
+
+## Installation
+- Download/Clone this repo in your Wordpress Plugins folder.
+- Activate the Plugin
+
+## Add jQuery to your project
+
+```php
+  <?php addJQuery($specific_version, $addToFrontend, $addToBackend) ?>
+```
+
+
+## Add a JS File
+It´s very easy to add a JS File
