@@ -60,7 +60,7 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 ## Add jQuery to your project
 
 ```php
-<?php addJQuery($specific_version, $addToFrontend, $addToBackend) ?>
+<?php Maxxdev_Helper_Frontend::addJQuery($specific_version, $addToFrontend, $addToBackend) ?>
 ```
 option | default | value  | requierd | description
 ------ | ------- | -------|--------- | -----------
@@ -71,7 +71,7 @@ $addToFrontend |true | boolean |No|Should it be embedded in the backend?
 ## Add a custom JS file
 It´s very easy to add a JS File
 ```php
-<?php addJs($file_path, $script_name, $addToFrontend, $addToBackend) ?>
+<?php Maxxdev_Helper_Frontend::addJs($file_path, $script_name, $addToFrontend, $addToBackend) ?>
 ```
 option | default | value | requierd | description
 ------ | ------- | ----- | -------- | -----------
@@ -82,7 +82,7 @@ $addToBackend|true|boolean|No|Should it be embedded in the backend?
 
 ## Add a custom CSS file
 ```php
-<?php addCSS($file_path, $style_name, $addToFrontend, $addToBackend) ?>
+<?php Maxxdev_Helper_Frontend::addCSS($file_path, $style_name, $addToFrontend, $addToBackend) ?>
 ```
 option | default | value | requierd | description
 ------ | ------- | ----- | -------- | -----------
