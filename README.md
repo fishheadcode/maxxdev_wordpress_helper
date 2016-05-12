@@ -3,16 +3,15 @@
 Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 
 ## Features
-
 ### Frontend
 - Add a JS File
--- jQuery
--- Custom File
+  - jQuery
+  - Custom File
 - Add a CSS File
 - Add/Install a Frontend Framework
--- Bootstrap
--- Fontawesome
--- Bootswatch
+  - Bootstrap
+  - Fontawesome
+  - Bootswatch
 
 
 
