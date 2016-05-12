@@ -56,6 +56,7 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 ## Installation
 - Download/Clone this repo in your Wordpress Plugins folder.
 - Activate the Plugin
+
 Now you can create a plugin where you can put all your changes with this helper in an action("init")-hook or just simply write it into the functions.php in your themes folder.
 
 ## Add jQuery to your project
@@ -89,5 +90,20 @@ option | default | value | requierd | description
 ------ | ------- | ----- | -------- | -----------
 $file_path | - |string|Yes|The filepath of the CSS file
 $script_name |null|string|No|The name/handler of the style
+$addToFrontend|true|boolean|No|Should it be embedded in the frontend?
+$addToBackend|true|boolean|No|Should it be embedded in the backend?
+
+## Add/Install a Frontend Framework
+
+Add twitter Bootstrap to your project
+
+```php
+<?php Maxxdev_Helper_Frontend::addBootstrap($specific_version, $load_css, $load_javascript, $addToFrontend, $addToBackend); ?>
+```
+option | default | value | requierd | description
+------ | ------- | ----- | -------- | -----------
+$specific_version|3.2.0|string|no|Specify the version here. Default: 3.2.0
+$load_css|true|boolean|no|should the css from twitter bootstrap been loaded?
+$load_js|false|boolean|no|should the js from twitter bootstrap been loaded?
 $addToFrontend|true|boolean|No|Should it be embedded in the frontend?
 $addToBackend|true|boolean|No|Should it be embedded in the backend?
