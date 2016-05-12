@@ -12,12 +12,12 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
   - Fontawesome
   - Bootswatch
   
-### Admin
+### Admin & Wordpress Backend
 - Add a meta box
 - Add a toplevel menu
 - Add a toplevel submenu
 - Add a options page
-- 
+ 
 ### Date
 - Get german days
 - Get german months
