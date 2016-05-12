@@ -59,6 +59,8 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 
 Now you can create a plugin where you can put all your changes with this helper in an action("init")-hook or just simply write it into the functions.php in your themes folder.
 
+=============================
+
 ## Add jQuery to your project
 
 ```php
@@ -147,4 +149,11 @@ $theme|"amelia"|string|no|Name of the theme which should be added. Must be a val
 $specific_version|3.2.0|string|no|Specify the version here. Default: 3.2.0
 $addToFrontend|true|boolean|No|Should it be embedded in the frontend?
 $addToBackend|true|boolean|No|Should it be embedded in the backend?
+
+## Add a meta box
+
+Creates a new metabox in the admin area for the specified posttypes.
+
+```php
+<?php Maxxdev_Helper_Admin::addAdminMetaBox($screens, $section_id, $section_title, $section_title_translate_key, $callback_function); ?>
 
