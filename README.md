@@ -64,11 +64,11 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 ```
 option | default | value  | requierd | description
 ------ | ------- | -------|--------- | -----------
-$specific_version|null |No| If you want to have a specific version of jquery enter the version number here. If you dont add a version it will be [//code.jquery.com/jquery.min.js](//code.jquery.com/jquery.min.js) added
+$specific_version|null |string|No| If you want to have a specific version of jquery enter the version number here. If you dont add a version it will be [//code.jquery.com/jquery.min.js](//code.jquery.com/jquery.min.js) added
 $addToFrontend |true | boolean |No|Should it be embedded in the frontend?
 $addToFrontend |true | boolean |No|Should it be embedded in the backend?
 
-## Add a JS File
+## Add a custom JS file
 It´s very easy to add a JS File
 ```php
 <?php addJs($file_path, $script_name, $addToFrontend, $addToBackend) ?>
@@ -77,5 +77,16 @@ option | default | value | requierd | description
 ------ | ------- | ----- | -------- | -----------
 $file_path | - |string|Yes|The filepath of the JS file
 $script_name |null|string|No|The name/handler of the script
+$addToFrontend|true|boolean|No|Should it be embedded in the frontend?
+$addToBackend|true|boolean|No|Should it be embedded in the backend?
+
+## Add a custom CSS file
+```php
+<?php addCSS($file_path, $style_name, $addToFrontend, $addToBackend) ?>
+```
+option | default | value | requierd | description
+------ | ------- | ----- | -------- | -----------
+$file_path | - |string|Yes|The filepath of the CSS file
+$script_name |null|string|No|The name/handler of the style
 $addToFrontend|true|boolean|No|Should it be embedded in the frontend?
 $addToBackend|true|boolean|No|Should it be embedded in the backend?
