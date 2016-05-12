@@ -9,7 +9,7 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 - Add a CSS File
 - Add/Install a Frontend Framework
   - Bootstrap
-  - Fontawesome
+  - FontAwesome
   - Bootswatch
   
 ### Admin & Wordpress Backend
@@ -52,6 +52,3 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 - Search a user
 - Delete a user
 - Set role for a user
-
-Will be edited later, sry no time atm for that ;)
-But the document maxxdev.php is well documented :)
