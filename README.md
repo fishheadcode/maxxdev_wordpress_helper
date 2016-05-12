@@ -56,6 +56,7 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 ## Installation
 - Download/Clone this repo in your Wordpress Plugins folder.
 - Activate the Plugin
+Now you can create a plugin where you can put all your changes with this helper in an action("init")-hook or just simply write it into the functions.php in your themes folder.
 
 ## Add jQuery to your project
 
