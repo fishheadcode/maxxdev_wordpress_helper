@@ -121,7 +121,7 @@ $addToBackend|true|boolean|No|Should it be embedded in the backend?
 
 Adds **bootswatch** to your site
 
-** Valid themes:** 
+**Valid themes:** 
 - amelia 
 - cerulean
 - cosmo
