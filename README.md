@@ -118,3 +118,33 @@ option | default | value | requierd | description
 $specific_version|4.1.0|string|no|Specify the version here. Default: 4.1.0
 $addToFrontend|true|boolean|No|Should it be embedded in the frontend?
 $addToBackend|true|boolean|No|Should it be embedded in the backend?
+
+Adds **bootswatch** to your site
+
+** Valid themes:** 
+- amelia 
+- cerulean
+- cosmo
+- cyborg
+- darkly
+- flatly
+- journal
+- lumen
+- readable
+- simplex
+- slate
+- spacelab
+- superhero
+- united
+- yeti
+
+```php
+<?php Maxxdev_Helper_Frontend::addBootswatch($theme,$specific_version, $addToFrontend, $addToBackend); ?>
+```
+option | default | value | requierd | description
+------ | ------- | ----- | -------- | -----------
+$theme|"amelia"|string|no|Name of the theme which should be added. Must be a valid bootswatch theme.
+$specific_version|3.2.0|string|no|Specify the version here. Default: 3.2.0
+$addToFrontend|true|boolean|No|Should it be embedded in the frontend?
+$addToBackend|true|boolean|No|Should it be embedded in the backend?
+
