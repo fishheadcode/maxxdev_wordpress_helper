@@ -62,7 +62,11 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 ```php
   <?php addJQuery($specific_version, $addToFrontend, $addToBackend) ?>
 ```
-
+option | default | value  | description
+------ | ------- | -------|-------
+$specific_version | null | | If you want to have a specific version of jquery enter the version number here
+$addToFrontend | true | boolean | Should it be embedded in the frontend?
+$addToFrontend | true | boolean | Should it be embedded in the backend?
 
 ## Add a JS File
 It´s very easy to add a JS File
