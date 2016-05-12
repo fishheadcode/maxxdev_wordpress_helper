@@ -11,7 +11,7 @@ Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
   - Bootstrap
   - Fontawesome
   - Bootswatch
-  - 
+  
 ### Admin
 - Add a meta box
 - Add a toplevel menu
