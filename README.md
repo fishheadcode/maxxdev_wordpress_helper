@@ -95,7 +95,7 @@ $addToBackend|true|boolean|No|Should it be embedded in the backend?
 
 ## Add/Install a Frontend Framework
 
-Add twitter Bootstrap to your project
+Add **twitter Bootstrap** to your project
 
 ```php
 <?php Maxxdev_Helper_Frontend::addBootstrap($specific_version, $load_css, $load_javascript, $addToFrontend, $addToBackend); ?>
@@ -108,7 +108,7 @@ $load_js|false|boolean|no|should the js from twitter bootstrap been loaded?
 $addToFrontend|true|boolean|No|Should it be embedded in the frontend?
 $addToBackend|true|boolean|No|Should it be embedded in the backend?
 
-Add FontAwesome to your project
+Add **FontAwesome** to your project
 
 ```php
 <?php Maxxdev_Helper_Frontend::addFontAwesome($specific_version, $addToFrontend, $addToBackend); ?>
