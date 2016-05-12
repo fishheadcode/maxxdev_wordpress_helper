@@ -107,3 +107,14 @@ $load_css|true|boolean|no|should the css from twitter bootstrap been loaded?
 $load_js|false|boolean|no|should the js from twitter bootstrap been loaded?
 $addToFrontend|true|boolean|No|Should it be embedded in the frontend?
 $addToBackend|true|boolean|No|Should it be embedded in the backend?
+
+Add FontAwesome to your project
+
+```php
+<?php Maxxdev_Helper_Frontend::addFontAwesome($specific_version, $addToFrontend, $addToBackend); ?>
+```
+option | default | value | requierd | description
+------ | ------- | ----- | -------- | -----------
+$specific_version|4.1.0|string|no|Specify the version here. Default: 4.1.0
+$addToFrontend|true|boolean|No|Should it be embedded in the frontend?
+$addToBackend|true|boolean|No|Should it be embedded in the backend?
