@@ -1,4 +1,4 @@
-#maxxdev_wordpress_helper
+#maxxdev WordPress Helper
 Made with :heart: by [Chris Schrut](https://twitter.com/chrisschrut)!
 
 ## Features
