@@ -41,7 +41,7 @@ class Maxxdev_Helper_Posttype {
 			'rewrite' => $rewrite,
 			'show_ui' => $show_in_nav,
 			'show_in_nav' => $show_in_nav,
-			'supports' => array('title', 'editor', 'thumbnail'));
+			'supports' => array('title', 'editor', 'thumbnail', 'comments', 'author', 'excerpt', 'trackbacks', 'custom-fields', 'revisions', 'page-attributes', 'post-formats'));
 
 		if ($position !== false) {
 			$args['menu_position'] = $position;
@@ -87,14 +87,14 @@ class Maxxdev_Helper_Posttype {
 		$labels = array(
 			'name' => _x($plural, "taxonomy general name"),
 			'singular_name' => _x($singular, "taxonomy singular name"),
-			'search_items' => __("Suche nach $singular"),
-			'all_items' => __("Alle $singular"),
-			'parent_item' => __("Übergeordnete(s) $singular"),
-			'parent_item_colon' => __("Übergeordnete(s) $singular:"),
-			'edit_item' => __("$singular bearbeiten"),
-			'update_item' => __("$singular bearbeiten"),
-			'add_new_item' => __("$singular anlegen"),
-			'new_item_name' => __("Neuer $singular Name"),
+			'search_items' => __("Search for $singular"),
+			'all_items' => __("All $singular"),
+			'parent_item' => __("Parent $singular"),
+			'parent_item_colon' => __("Parent $singular:"),
+			'edit_item' => __("Edit $singular"),
+			'update_item' => __("Edit $singular"),
+			'add_new_item' => __("New $singular"),
+			'new_item_name' => __("New $singular name"),
 		);
 
 		// Register and attach to 'team' post type
@@ -114,7 +114,7 @@ class Maxxdev_Helper_Posttype {
 					"description" => "",
 					"slug" => $term[1],
 					"parent" => ""
-					)
+						)
 				);
 			}
 		}

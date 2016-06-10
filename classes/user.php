@@ -45,15 +45,15 @@ class Maxxdev_Helper_User {
 	}
 
 	public static function search() {
-		
+
 	}
 
 	public static function delete() {
-		
+
 	}
 
 	public static function setRole() {
-		
+
 	}
 
 	public static function login($user, $password, $remember = false) {
@@ -74,6 +74,58 @@ class Maxxdev_Helper_User {
 		}
 
 		return $autologin_user;
+	}
+
+	public static function changePassword($user, $user_id, $oldPassword, $newPassword, $newPasswordConfirmation, $autologin = false) {
+		if ($newPassword != $newPasswordConfirmation) {
+			return array("success" => false, "message" => __("The new passwords did not match"));
+		}
+
+		$login = self::login($user, $oldPassword, false);
+
+		if (is_wp_error($login)) {
+			return array("success" => false, "message" => __("Your login credentials are not valid"));
+		}
+
+		wp_set_password($newPassword, $user_id);
+
+		return array("success" => true);
+	}
+
+	public static function resetPassword($user) {
+		$user_id = username_exists($user);
+
+		if (is_numeric($user_id) && $user_id !== false) {
+			if (self::sendPasswordResetMail($user, $user_id)) {
+				return array("success" => true, "message" => __("Password reset successful. An email with further instruction will be sent to you."));
+			} else {
+				return array("success" => false, "message" => __("Error at sending password reset email. Please try again later."));
+			}
+		} else {
+			return array("success" => false, "message" => __("User does not exist"));
+		}
+	}
+
+	public static function sendPasswordResetMail($email, $user_id) {
+		// generate key
+		$key1 = md5(rand(1000, 9999) . rand(1000, 9999));
+		$key2 = md5(rand(1000, 9999) . rand(1000, 9999));
+		$key = $key1 . $key2;
+
+		// set url
+		$url = get_bloginfo("url") . "/resetpassword/" . $user_id . "/" . $key;
+		$blogname = get_bloginfo("name");
+		
+		$message = __(file_get_contents(dirname(__FILE__) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "emails" . DIRECTORY_SEPARATOR . "resetpassword.txt"));
+		$message = str_replace(array("{link}","{blogname}"), array($url, $blogname), $message);
+
+		// save key
+		update_user_meta($user_id, "passwordresetkey", $key);
+
+		// send mail
+		wp_mail($email, "Passwort zurücksetzen", $message);
+
+		return true;
 	}
 
 }

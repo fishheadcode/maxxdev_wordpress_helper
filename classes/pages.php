@@ -11,7 +11,7 @@ class Maxxdev_Helper_Pages {
 	 * @return boolean
 	 */
 	public static function createPage($page_title, $page_template = null) {
-		// search pages		
+		// search pages
 		$existingPage = get_posts(array(
 			"post_type" => "page",
 			"s" => $page_title
@@ -46,7 +46,7 @@ class Maxxdev_Helper_Pages {
 
 	/**
 	 * Sets a template file to a page
-	 * 
+	 *
 	 * @param int $page_id The ID of the post
 	 * @param string $template_file The template file in the template folder, e.g. "myfile.php"
 	 */
@@ -57,7 +57,7 @@ class Maxxdev_Helper_Pages {
 	/**
 	 * Returns the page as object.
 	 * If no page is found, an empty stdClass() object will be returned
-	 * 
+	 *
 	 * @param string $title Title of the page, e.g. "My Test Page"
 	 * @return \stdClass
 	 */
@@ -74,13 +74,34 @@ class Maxxdev_Helper_Pages {
 	/**
 	 * Returns the content of a specific page.
 	 * The page will be searchd by the title (first param $title)
-	 * 
+	 *
 	 * @param string $title The page name, e.g. "My Test Page"
 	 * @return string
 	 */
 	public static function getPageContentByTitle($title) {
 		$page = self::getPageByTitle($title);
 		return $page->post_content;
+	}
+
+	/**
+	 * Returns the content of a specific page.
+	 * The page will be searchd by the title (first param $title)
+	 *
+	 * @param string $title The page name, e.g. "My Test Page"
+	 * @return string
+	 */
+	public static function getPageTitleByTitle($title) {
+		$page = self::getPageByTitle($title);
+		return $page->post_title;
+	}
+
+	/**
+	 * add a new page
+	 *
+	 * @param string $page
+	 */
+	public static function addPage($page) {
+		self::$pages[] = $page;
 	}
 
 }

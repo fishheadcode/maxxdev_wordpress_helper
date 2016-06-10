@@ -181,11 +181,11 @@ class Maxxdev_Helper_Frontend {
 	 */
 	public static function addBootstrap($specific_version = "3.2.0", $load_css = true, $load_javascript = false, $frontend = true, $backend = true) {
 		if ($load_css === true) {
-			self::addCSSToList("//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/css/bootstrap.min.css", "maxxdev-helper-bootstrap", $frontend, $backend);
+			self::downloadAndAddFile("css", "bootstrap-" . $specific_version . ".css", "http://maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/css/bootstrap.min.css", "maxxdev-helper-bootstrap", $frontend, $backend);
 		}
 
 		if ($load_javascript === true) {
-			self::addJSToList("//maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/js/bootstrap.min.js", "maxxdev-helper-bootstrap", $frontend, $backend);
+			self::downloadAndAddFile("js", "bootstrap-" . $specific_version . ".js", "http://maxcdn.bootstrapcdn.com/bootstrap/" . $specific_version . "/js/bootstrap.min.js", "maxxdev-helper-bootstrap", $frontend, $backend);
 		}
 	}
 
@@ -204,7 +204,51 @@ class Maxxdev_Helper_Frontend {
 		if ($specific_version === null) {
 			self::addJSToList("//code.jquery.com/jquery.min.js", "maxxdev-helper-jquery", $frontend, $backend);
 		} else {
-			self::addJSToList("//ajax.googleapis.com/ajax/libs/jquery/" . $specific_version . "/jquery.min.js", "maxxdev-helper-jquery-specific", $frontend, $backend);
+			self::downloadAndAddFile("js", "jquery-" . $specific_version . ".js", "http://ajax.googleapis.com/ajax/libs/jquery/" . $specific_version . "/jquery.min.js", "maxxdev-helper-jquery", $frontend, $backend);
+		}
+	}
+
+	/**
+	 * Adds the Google Maps API to the site
+	 */
+	public static function addGoogleMapsApi() {
+		self::addJSToList("https://maps.googleapis.com/maps/api/js?sensor=false", "maxxdev_helper_google_maps", true, false);
+	}
+
+	private static function downloadAndAddFile($folder, $filename, $file_online, $include_name, $frontend, $backend) {
+		$folder_local = Maxxdev::getPluginDirPath() . "/" . $folder . "/";
+		$url_local = Maxxdev::getPluginDirUrl() . "/" . $folder . "/";
+		$file_local = $folder_local . $filename;
+		$file_local_url = $url_local . $filename;
+		@mkdir($folder_local);
+
+		if (!file_exists($file_local)) {
+			// add file
+			if (function_exists("curl_init")) {
+				// try to curl file
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $file_online);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				$output = curl_exec($ch);
+
+				$handle = fopen($file_local, "w");
+				fwrite($handle, $output);
+				fclose($handle);
+			}
+		}
+
+		if (file_exists($file_local)) {
+			if ($folder == "js") {
+				self::addJS($file_local_url, $include_name, $frontend, $backend);
+			} else {
+				self::addCSS($file_local_url, $include_name, $frontend, $backend);
+			}
+		} else {
+			if ($folder == "js") {
+				self::addJS($file_online, $include_name, $frontend, $backend);
+			} else {
+				self::addCSS($file_online, $include_name, $frontend, $backend);
+			}
 		}
 	}
 
